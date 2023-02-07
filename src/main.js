@@ -7,6 +7,7 @@ import vSelect from 'vue-select'
 import './assets/main.css'
 import './assets/tailwind.css'
 import 'vue-select/dist/vue-select.css';
+import "bootstrap/dist/css/bootstrap.min.css"
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -20,3 +21,6 @@ app.use(VueAxios, axios)
 app.component('v-select', vSelect)
 app.mount('#app')
 
+import "bootstrap/dist/js/bootstrap.js"
+import JQuery from 'jquery'
+window.$ = JQuery

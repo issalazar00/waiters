@@ -2,16 +2,25 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import global from './../_services/global.js';
 import HomeView from '../views/HomeView.vue'
-import Orders from './../components/order/Orders.vue'
-import CreateEditOrder from './../components/order/CreateEditOrder.vue'
-import DetailsOrder from './../components/order/DetailsOrder.vue'
+const Orders = () => import ('./../components/order/Orders.vue')
+const CreateEditOrder = () => import ('./../components/order/CreateEditOrder.vue')
+const DetailsOrder = () => import ('./../components/order/DetailsOrder.vue')
+
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
+
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'main',
+      component: CreateEditOrder
+    },
+
+    {
+      path: '/login',
+      name: 'Login',
       component: Login
     },
     {
@@ -21,25 +30,24 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: HomeView,
-      children: [
-        {
-          path:'orders',
-          name: 'orders',
-          component: Orders
-        },
-        {
-          path:'create-edit-order/:order_id',
-          name:'create-edit-order',
-          props:true,
-          component: CreateEditOrder          
-        },
-        {
-          path:'details-order/:order_id',
-          name:'details-order',
-          props:true,
-          component: DetailsOrder          
-        }
-      ]
+       
+    },
+    {
+      path:'/orders',
+      name: 'orders',
+      component: Orders
+    },
+    {
+      path:'/create-edit-order/:order_id',
+      name:'create-edit-order',
+      props:true,
+      component: CreateEditOrder          
+    },
+    {
+      path:'/details-order/:order_id',
+      name:'details-order',
+      props:true,
+      component: DetailsOrder          
     }
   ]
 })

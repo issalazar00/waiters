@@ -25,7 +25,7 @@
 									:disabled="boxUser.id ? false : true">
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="resetBox">
@@ -55,7 +55,7 @@ export default {
 	},
 	methods: {
 		selectedBox() {
-			axios
+			this.axios
 				.get("api/boxes/byUser", this.$root.config)
 				.then(response => {
 					this.$root.listBoxes = response.data.boxes;
@@ -79,7 +79,7 @@ export default {
 				'id': this.boxUser.id,
 				'base': this.boxUser.base
 			}
-			axios.post(`api/boxes/base/${this.boxUser.id}`, data, this.$root.config)
+			this.axios.post(`api/boxes/base/${this.boxUser.id}`, data, this.$root.config)
 
 		},
 		resetBox() {

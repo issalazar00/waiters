@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       data: "Login",
-      api: this.axios.defaults.baseURL+'api',
+      api: this.axios.defaults.baseURL + 'api',
       formValues: {
         username: "",
         password: "",
@@ -54,7 +54,7 @@ export default {
       },
     };
   },
-  created() { 
+  created() {
     if(this.$root.user && this.$root.token){
       this.$router.push("/home");
     }

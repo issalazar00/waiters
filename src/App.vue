@@ -5,6 +5,16 @@
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div>
+    <nav v-if="user && token">
+      <!-- <RouterLink to="/">Home</RouterLink> -->
+      <RouterLink :to="{name:'orders'}">Ordenes</RouterLink>
+      <RouterLink :to="{name:'create-edit-order', params:{order_id:0}}">Crear Orden</RouterLink>
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click="this.$root.logout">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Cerrar Sesión</span></a>
+      </li>
+    </nav>
   </header>
 
   <RouterView />

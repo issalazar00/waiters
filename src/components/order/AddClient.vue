@@ -83,7 +83,7 @@ export default {
   methods: {
     listClients() {
       let me = this;
-      axios
+      this.axios
         .post("api/clients/filter-client-list", null, this.$root.config)
         .then(function (response) {
           me.ClientList = response;
@@ -96,13 +96,13 @@ export default {
       }
       var url = "api/clients/filter-client-list?client=" + me.filters.client;
       if (me.filters.client.length >= 3) {
-        axios
+        this.axios
           .post(url, null, me.$root.config)
           .then(function (response) {
             me.ClientList = response;
           })
           .catch(function (error) {
-            $("#no-results").toast("show");
+            // $("#no-results").toast("show");
 
             console.log(error);
           });

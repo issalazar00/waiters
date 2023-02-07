@@ -588,13 +588,13 @@ export default {
     },
   },
   mounted() {
-    $("#no-results").toast("hide");
+    // $("#no-results").toast("hide");
     if (this.order_id != null || this.order_id != 0) {
       this.listItemsOrder();
     }
     this.listTables()
-    this.commands();
-    this.$refs.ModalBox.selectedBox();
+    // this.commands();
+    // this.$refs.ModalBox.selectedBox();
   },
 };
 </script>

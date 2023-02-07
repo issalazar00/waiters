@@ -117,7 +117,7 @@ export default {
   methods: {
     getDetailsOrder() {
       let me = this;
-      axios
+      this.axios
         .get(`api/orders/${this.order_id}`, this.$root.config)
         .then(function (response) {
           me.orderInformation = response.data.order_information;

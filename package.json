@@ -8,7 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "autoprefixer": "^10",
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.3",
     "moment": "^2.29.4",
     "pinia": "^2.0.28",
     "postcss": "^8",

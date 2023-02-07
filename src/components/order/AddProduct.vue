@@ -77,7 +77,7 @@
                     
                       <li class="list-group-item">
                         <b><i>Precio</i></b
-                        >: {{ product.sale_price_tax_inc | currency }}
+                        >: {{ product.sale_price_tax_inc  }}
                       </li>
                       
                       <!-- <li class="list-group-item">
@@ -146,13 +146,13 @@ export default {
         category_id: this.filters.category_id,
       };
 
-      axios
+      this.axios
         .post(`api/products/filter-product-list?`, data, this.$root.config)
         .then(function (response) {
           me.ProductList = response;
         })
         .catch(function (error) {
-          $("#no-results").toast("show");
+          // $("#no-results").toast("show");
 
           console.log(error);
         });
@@ -160,7 +160,7 @@ export default {
 
     listCategories() {
       let me = this;
-      axios
+      this.axios
         .get("api/categories/category-list?page=1", me.$root.config)
         .then(function (response) {
           me.categoryList = response.data.categories;
