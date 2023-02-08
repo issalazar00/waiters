@@ -1,35 +1,55 @@
-<template >
-  <div id="login">
-    <div id="logo">
-      <h1> BIENVENIDOS A TECNOPLUS</h1>
-    </div>
-    <div class="stark-login">
-      <form id="form_login" autocomplete="off" @submit.prevent="login">
-        <div id="fade-box" class="px-5">
-          <div class="form-group">
-            <label class="w-100 text-left" for="exampleInputUsername1">Usuario o email</label>
-            <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" name="username"
-              placeholder="Ingresar username" required v-model="formValues.username" />
+
+<template>
+  <!--
+    This example requires updating your template:
+
+    ```
+    <html class="h-full bg-gray-50">
+    <body class="h-full">
+    ```
+  -->
+  <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8">
+      <div>
+        <img class="w-12 mx-auto h-1zz2 w-auto" src="@/assets/logo.svg" alt="Your Company" />
+
+        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Bienvenido</h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+          Ingresa a tu cuenta
+        </p>
+      </div>
+      <form id="form_login" class="mt-8 space-y-6" autocomplete="off" method="POST" @submit.prevent="login">
+        <input type="hidden" name="remember" value="true" />
+        <div class="-space-y-px rounded-md shadow-sm">
+          <div>
+            <label for="email-address" class="sr-only">Usuario o email</label>
+            <input id="email-address" name="username" type="text" autocomplete="username" required
+              class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="Usuario o email" aria-describedby="usernameHelp" v-model="formValues.username" />
             <small id="usernameHelp" class="form-text text-danger">{{
               formErrors.username
             }}</small>
           </div>
-          <div class="form-group">
-            <label class="w-100 text-left" for="exampleInputPassword1">Contraseña</label>
-            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" name="password"
-              placeholder="Ingresar contraseña" required v-model="formValues.password" />
-            <small id="passwordHelp" class="form-text text-danger">{{
-              formErrors.password
-            }}</small>
+          <div>
+            <label for="password" class="sr-only">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required="" aria-describedby="passwordHelp"
+              class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="Ingresar contraseña" v-model="formValues.password" />
+              <small id="passwordHelp" class="form-text text-danger">{{
+                formErrors.password
+              }}</small>
           </div>
-          <button type="submit" class="btn btn-primary">Acceder</button>
+        </div>
+
+        <div>
+          <button type="submit"
+            class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+            </span>
+            Ingresar
+          </button>
         </div>
       </form>
-    </div>
-    <div id="circle1">
-      <div id="inner-cirlce1">
-        <h2></h2>
-      </div>
     </div>
   </div>
 </template>
@@ -55,7 +75,7 @@ export default {
     };
   },
   created() {
-    if(this.$root.user && this.$root.token){
+    if (this.$root.user && this.$root.token) {
       this.$router.push("/home");
     }
   },
@@ -81,7 +101,7 @@ export default {
           ) {
             localStorage.setItem("token", response.user.api_token);
             localStorage.setItem("user", JSON.stringify(response.user));
-            this.$router.push("/");
+            this.$router.push({ name: 'main', params: { order_id: '0' } });
           }
         })
         .catch((error) => {

@@ -15,7 +15,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: CreateEditOrder
+      component: CreateEditOrder,
+      props:{
+        order_id:0
+      }
     },
 
     {
