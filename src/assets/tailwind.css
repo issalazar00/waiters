@@ -1,5 +1,27 @@
 @tailwind base;
 
+@layer base {
+    table {
+      @apply table-auto border-collapse border border-slate-500 border-spacing-2 gap-6;
+    }
+    thead {
+      @apply border-b;
+    }
+
+    th {
+      @apply text-sm font-medium text-gray-900 px-6 py-4 text-left;
+    }
+  
+  }
+
+
 @tailwind components;
+
+@layer components {
+    button {
+      @apply p-2 border;
+    }
+  
+  }
 
 @tailwind utilities;

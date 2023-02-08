@@ -1,10 +1,7 @@
 <template>
   <div class="row px-2" id="create-edit-order">
     <div class="col-12 justify-content-center p-2">
-      <div
-        class="sticky-top mb-2 text-uppercase w-md-50 w-100"
-        style="z-index: 1022; left: 100%"
-      >
+      <div class="sticky-top mb-2 text-uppercase w-md-50 w-100" style="z-index: 1022; left: 100%">
         <table class="table table-borderless">
           <tr class="h1 text-white bg-success">
             <td class="text-right">Total</td>
@@ -12,68 +9,25 @@
           </tr>
         </table>
       </div>
-      <div class="position-fixed top-0 right-0 w-50" style="z-index: 3000">
-        <div
-          class="toast fade hide border border-danger w-100 m-3"
-          style="max-width: 90%"
-          role="alert"
-          id="no-results"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-delay="3000"
-        >
-          <div class="toast-header">
-            <strong class="mr-auto h3 text-danger">Advertencia</strong>
-            <button
-              type="button"
-              class="ml-2 mb-1 close"
-              data-dismiss="toast"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body text-dark h4">
-            No se ha encontrado coincidencias
-          </div>
-        </div>
-      </div>
-      <div
-        class="row position-sticky sticky-top mb-2 bg-light p-1"
-        style="top: 0.5rem"
-      >
+      <div class="row position-sticky sticky-top mb-2 bg-light p-1" style="top: 0.5rem">
         <div class="input-group col-12 col-md-6">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Código de barras"
-            aria-label=" with two button addons"
-            aria-describedby="button-add-product"
-            v-model="filters.product"
-            autofocus
-            @keypress.enter="searchProduct()"
-          />
+          <input type="text" class="form-control" placeholder="Código de barras" aria-label=" with two button addons"
+            aria-describedby="button-add-product" v-model="filters.product" autofocus
+            @keypress.enter="searchProduct()" />
           <div class="input-group-append" id="button-add-product">
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              @click="searchProduct()"
-            >
+            <button class="btn btn-outline-secondary" type="button" @click="searchProduct()">
               <b>F10</b>
               Añadir Producto
             </button>
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              data-toggle="modal"
-              data-target="#addProductModal"
-            >
+            <button class="btn btn-outline-secondary" type="button" @click="openModalProduct = true">
               <i class="bi bi-card-checklist"></i>
+              Abrir Modal de productos
             </button>
           </div>
         </div>
         <div class="input-group col-12 col-md-6">
-          <v-select :options="tableList" placeholder="Seleccionar mesa" class="w-100" label="table" :reduce="(table) => table.id" v-model="order.table_id" />
+          <v-select :options="tableList" placeholder="Seleccionar mesa" class="w-100" label="table"
+            :reduce="(table) => table.id" v-model="order.table_id" />
         </div>
         <div class="input-group col-12 col-md-6 offset-md-6">
           <input type="text" class="form-control" :placeholder="order.client" aria-label=" with two button addons"
@@ -82,21 +36,20 @@
             <button class="btn btn-outline-secondary" type="button" @click="searchClient()">
               Añadir Cliente
             </button>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#addClientModal">
+            <button class="btn btn-outline-secondary" type="button" @click="openModalClient = true">
+              Abrir Modal de clientes {{ openModalClient }}
               <i class="bi bi-person-lines-fill"></i>
             </button>
           </div>
         </div>
-        
+
       </div>
 
       <section>
         <div>
-          <table
-            class="
-              table table-sm table-responsive-sm table-bordered table-hover
-            "
-          >
+          <table class="
+              table table-auto table-sm table-responsive-sm table-bordered table-hover
+            ">
             <thead class="bg-secondary text-white" style="top: 4rem">
               <tr>
                 <th></th>
@@ -109,10 +62,7 @@
             <tbody v-if="productsOrderList.length > 0">
               <tr v-for="(p, index) in productsOrderList" :key="p.id">
                 <td>
-                  <button
-                    class="btn text-danger"
-                    @click="removeProduct(index, p.id)"
-                  >
+                  <button class="btn text-danger" @click="removeProduct(index, p.id)">
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
@@ -121,47 +71,23 @@
                 <td>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <button
-                        class="btn btn-danger d-none d-xs-none d-sm-none d-md-block"
-                        type="button"
-                        id="button-addon1"
-                        @click="p.quantity -= 1"
-                        :disabled="p.quantity<=1"
-                      >
+                      <button class="btn btn-danger d-none d-xs-none d-sm-none d-md-block" type="button"
+                        id="button-addon1" @click="p.quantity -= 1" :disabled="p.quantity <= 1">
                         -
                       </button>
                     </div>
 
-                    <input
-                      type="number"
-                      name="quantity"
-                      id="quantity"
-                      step="any"
-                      placeholder="Cantidad"
-                      class="form-control "
-                      v-model="p.quantity"
-                      size="6"
-                      pattern="[0-9]+"
-                      style="min-width: 60px"
-                    />
+                    <input type="number" name="quantity" id="quantity" step="any" placeholder="Cantidad"
+                      class="form-control " v-model="p.quantity" size="6" pattern="[0-9]+" style="min-width: 60px" />
                     <div class="input-group-prepend w-sm-50">
-                      <button
-                        class="btn btn-danger d-sm-block d-md-none d-lg-none"
-                        type="button"
-                        id="button-addon1"
-                        @click="p.quantity -= 1"
-                        :disabled="p.quantity<=1"
-                      >
+                      <button class="btn btn-danger d-sm-block d-md-none d-lg-none" type="button" id="button-addon1"
+                        @click="p.quantity -= 1" :disabled="p.quantity <= 1">
                         -
                       </button>
                     </div>
                     <div class="input-group-prepend w-sm-50">
-                      <button
-                        class="btn btn-success hidden-sm"
-                        type="button"
-                        id="button-addon1"
-                        @click="p.quantity += 1"
-                      >
+                      <button class="btn btn-success hidden-sm" type="button" id="button-addon1"
+                        @click="p.quantity += 1">
                         +
                       </button>
                     </div>
@@ -169,33 +95,24 @@
 
                   <span class="hidden d-none">
                     {{
-                      (p.cost_price_tax_inc_total =
-                        p.cost_price_tax_inc * p.quantity)
+                    (p.cost_price_tax_inc_total =
+  p.cost_price_tax_inc * p.quantity)
                     }}
                   </span>
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    step="any"
-                    disabled
-                    placeholder="Cantidad"
-                    v-model="p.price_tax_inc"
-                    class="form-control"
-                    style="max-width: 100px"
-                  />
+                  <input type="number" name="price" id="price" step="any" disabled placeholder="Cantidad"
+                    v-model="p.price_tax_inc" class="form-control" style="max-width: 100px" />
                 </td>
 
                 <td>
                   $
                   {{
-                    (p.price_tax_inc_total =
-                      p.quantity * p.price_tax_inc -
-                      p.quantity *
-                        p.price_tax_inc *
-                        (p.discount_percentage / 100))
+                  (p.price_tax_inc_total =
+  p.quantity * p.price_tax_inc -
+  p.quantity *
+  p.price_tax_inc *
+  (p.discount_percentage / 100))
                   }}
                 </td>
               </tr>
@@ -213,62 +130,44 @@
       <div class="">
         <section class="card">
           <div>
-            <table class="table table-sm table-primary text-right">
+            <table class="table table-sm table-primary table-auto text-right">
               <tr class="bg-success h5 text-white">
                 <th colspan="7">Total:</th>
                 <th>
                   $ {{ (order.total_tax_inc = total_tax_inc).toFixed(0) }}
                 </th>
               </tr>
-            
+
               <tr class="">
                 <th colspan="7">Pagar:</th>
                 <th>
-                  <input
-                    type="number"
-                    step="any"
-                    v-model="order.payment_methods.others"
-                  />
+                  <input type="number" step="any" v-model="order.payment_methods.others" />
                 </th>
               </tr>
               <tr class="">
                 <th colspan="7">Cambio:</th>
                 <th>
-                  <input
-                    type="text"
-                    :value="payment_return"
-                    readonly
-                    disabled
-                  />
+                  <input type="text" :value="payment_return" readonly disabled />
                 </th>
               </tr>
             </table>
           </div>
         </section>
         <div class="">
-          <button
-            type="button"
-            :disabled="disabled"
-            class="btn btn-outline-primary btn-block"
-            @click="createOrUpdateOrder(1)"
-          >
+          <button type="button" :disabled="disabled" class="btn btn-outline-primary btn-block"
+            @click="createOrUpdateOrder(1)">
             <i class="bi bi-clock-fill"></i> Suspender
           </button>
-          <router-link
-            to="/orders"
-            type="button"
-            class="btn btn-outline-secondary btn-block"
-            v-if="order_id != 0"
-          >
+          <router-link to="/orders" type="button" class="btn btn-outline-secondary btn-block" v-if="order_id != 0">
             <i class="bi bi-cart-x"></i> Cancelar
           </router-link>
         </div>
       </div>
     </div>
 
-    <add-product @add-product="addProduct($event)" />
-    <add-client @add-client="addClient($event)" />
-    <modal-box ref="ModalBox"></modal-box>
+    <add-product :open="openModalProduct" @add-product="addProduct($event)" />
+    <add-client :open="openModalClient" @add-client="addClient($event)" />
+    <modal-box :open="open" ref="ModalBox"></modal-box>
   </div>
 </template>
 
@@ -276,6 +175,7 @@
 import AddProduct from "./AddProduct.vue";
 import AddClient from "./AddClient.vue";
 import ModalBox from "./../../views/ModalBox.vue";
+import { ref } from 'vue'
 
 export default {
   components: { AddProduct, AddClient, ModalBox },
@@ -284,6 +184,10 @@ export default {
 
   data() {
     return {
+      open: ref(false),
+      openModalProduct: ref(false),
+      openModalClient: ref(false),
+
       // add product or client with keyup
       filters: {
         product: "",
@@ -341,9 +245,9 @@ export default {
       this.productsOrderList.forEach((product) => {
         total += parseFloat(
           product.quantity * product.price_tax_inc -
-            product.quantity *
-              product.price_tax_inc *
-              (product.discount_percentage / 100)
+          product.quantity *
+          product.price_tax_inc *
+          (product.discount_percentage / 100)
         );
       });
       return total;
@@ -374,6 +278,10 @@ export default {
     },
   },
   methods: {
+    showAlert() {
+      // Use sweetalert2
+      this.$swal('Hello Vue world!!!');
+    },
     listItemsOrder() {
       if (this.order_id == 0) {
         return false;
@@ -407,7 +315,7 @@ export default {
         .then(function (response) {
           var new_product = response.data.products;
           if (!new_product) {
-            $("#no-results").toast("show");
+                  this.$swal('Hello Vue world!!!');
           } else {
             me.addProduct(new_product);
           }
@@ -469,7 +377,7 @@ export default {
         .then(function (response) {
           var new_client = response.data;
           if (!new_client) {
-            $("#no-results").toast("show");
+            this.$swal('Hello Vue world!!!');
           } else {
             me.addClient(new_client);
           }
@@ -521,10 +429,10 @@ export default {
               }
             })
             .finally(
-                setTimeout(() => {
-                  this.$router.go(0), (this.disabled = false)
-                }, 3000)
-              );
+              setTimeout(() => {
+                this.$router.go(0), (this.disabled = false)
+              }, 3000)
+            );
         } else {
           if (this.order.box_id > 0) {
             this.axios
@@ -588,13 +496,12 @@ export default {
     },
   },
   mounted() {
-    $("#no-results").toast("hide");
     if (this.order_id != null || this.order_id != 0) {
       this.listItemsOrder();
     }
     this.listTables()
-    this.commands();
-    this.$refs.ModalBox.selectedBox();
+    // this.commands();
+    // this.$refs.ModalBox.selectedBox();
   },
 };
 </script>
@@ -603,6 +510,7 @@ export default {
 #create-edit-order {
   font-size: 1rem;
 }
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

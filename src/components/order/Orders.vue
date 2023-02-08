@@ -1,52 +1,59 @@
 <template>
 	<div class="w-100">
-		<header class="page-header justify-content-between row px-4">
-			<h3>Ordenes</h3>
-			<router-link class="btn btn-primary" :to="{
-				name: 'create-edit-order',
-				params: { order_id: 0 },
-			}" v-if="$root.validatePermission('order.store')">
-				Nueva orden
-			</router-link>
+		<header class="bg-white shadow">
+			<div class="mx-auto w-full text-center py-6 px-4 sm:px-6 lg:px-8">
+				<h1 class="text-3xl font-bold tracking-tight text-gray-900">Ordenes</h1>
+			</div>
 		</header>
 		<section>
 			<load-pdf :loading="load_pdf" />
-			<div class="card-body">
-				<div class="form-row">
-					<h6 class="w-100">Buscar...</h6>
-					<div class="form-group col-3">
-						<label for="category">Estado</label>
-						<v-select :options="statusOrders" label="status" :reduce="(status) => status.id" v-model="filter.status" />
+			<div class="card-body overflow-hidden shadow sm:rounded-md">
+				<div class="form-row grid grid-cols-12 gap-6 justify-end">
+
+					<div class="form-group col-3 col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700" for="category">Estado</label>
+						<v-select :options="statusOrders" label="status" :reduce="(status) => status.id"
+							v-model="filter.status" />
 					</div>
-					<div class="form-group col-3">
-						<label for="nro_factura">Nro Factura</label>
-						<input type="text" name="nro_factura" id="nro_factura" class="form-control" placeholder="Nro Factura"
-							v-model="filter.no_invoice" />
+					<div class="form-group col-3 col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700" for="nro_factura">Nro Factura</label>
+						<input type="text" name="nro_factura" id="nro_factura"
+							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							placeholder="Nro Factura" v-model="filter.no_invoice" />
 					</div>
-					<div class="form-group col-3">
-						<label for="name_client">Cliente</label>
-						<input type="text" name="name_client" id="name_client" class="form-control" placeholder="Cliente"
-							v-model="filter.client" />
+					<div class="form-group col-3 col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700" for="name_client">Cliente</label>
+						<input type="text" name="name_client" id="name_client"
+							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							placeholder="Cliente" v-model="filter.client" />
 					</div>
-					<div class="form-group col-md-3">
-						<label for="from_date">Desde</label>
-						<input type="date" class="form-control" id="from_date" v-model="filter.from" />
+					<div class="form-group col-md-3 col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700" for="from_date">Desde</label>
+						<input type="date"
+							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							id="from_date" v-model="filter.from" />
 					</div>
-					<div class="form-group col-md-3">
-						<label for="to_date">Hasta</label>
-						<input type="date" class="form-control" id="to_date" v-model="filter.to" />
+					<div class="form-group col-md-3 col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700" for="to_date">Hasta</label>
+						<input type="date"
+							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+							id="to_date" v-model="filter.to" />
 					</div>
-					<div class="form-group col-3" v-if="$root.validatePermission('order.update')">
-						<label for="category">Usuario</label>
-						<v-select :options="userList" label="name" :reduce="(user) => user.id" v-model="filter.user_id" />
+					<div class="form-group col-3 col-span-6 sm:col-span-4"
+						v-if="$root.validatePermission('order.update')">
+						<label class="block text-sm font-medium text-gray-700" for="category">Usuario</label>
+						<v-select :options="userList" label="name" :reduce="(user) => user.id"
+							v-model="filter.user_id" />
 					</div>
-					<div class="form-group offset-9 col-md-3">
-						<button class="btn btn-success btn-block" @click="getOrders(1)">
+					<div class="form-group offset-9 col-md-3 col-span-6 sm:col-span-4"></div>
+					<div class="form-group offset-9 col-md-3 col-span-6 sm:col-span-4"></div>
+					<div class="form-group offset-9 col-md-3 col-span-6 sm:col-span-4">
+						<button class="p-2 rounded-md shadow-lg bg-green-500 text-white w-full" @click="getOrders(1)">
 							Buscar
 						</button>
 					</div>
 				</div>
-				<table class="table table-sm table-bordered table-responsive-sm">
+				<table class="table-auto min-w-full">
 					<thead>
 						<tr>
 							<th>#</th>
@@ -64,11 +71,11 @@
 					</thead>
 					<tbody>
 						<tr v-for="o in OrderList.data" :key="o.id">
-							<th scope="row">{{  o.id  }} - {{  o.bill_number  }}</th>
-							<td>{{  o.total_paid | currency  }}</td>
-							<td>{{  o.client.name  }}</td>
+							<th scope="row">{{ o.id }} - {{ o.bill_number }}</th>
+							<td>{{ o.total_paid | currency }}</td>
+							<td>{{ o.client.name }}</td>
 							<td>
-								{{  statusOrders[o.state]["status"]  }}
+								{{ statusOrders[o.state]["status"] }}
 							</td>
 							<td>
 								<router-link class="btn" :to="{ name: 'details-order', params: { order_id: o.id } }">
@@ -76,7 +83,8 @@
 								</router-link>
 							</td>
 							<td>
-								<button class="btn" v-if="o.state == 5 || o.state == 2 || o.state == 3" @click="printTicket(o.id)">
+								<button class="btn" v-if="o.state == 5 || o.state == 2 || o.state == 3"
+									@click="printTicket(o.id)">
 									<i class="bi bi-receipt"></i>
 								</button>
 								<button class="btn" v-else disabled>
@@ -90,17 +98,17 @@
 							</td>
 
 							<td>
-								{{  o.user.name  }}
+								{{ o.user.name }}
 							</td>
 							<td>
 								<span>
 									<b>Creación:</b>
-									{{  o.created_at | moment("DD-MM-YYYY h:mm:ss a")  }}
+									{{ o.created_at | moment("DD-MM-YYYY h:mm:ss a") }}
 								</span>
 								<br />
 								<span v-if="o.payment_date">
 									<b>Facturación:</b>
-									{{  o.payment_date | moment("DD-MM-YYYY h:mm:ss a")  }}
+									{{ o.payment_date | moment("DD-MM-YYYY h:mm:ss a") }}
 								</span>
 							</td>
 							<td v-if="$root.validatePermission('order.update')">
@@ -121,17 +129,17 @@
 					<tfoot>
 						<tr class="text-bold">
 							<th class="border-0"></th>
-							<th>{{  TotalOrderList.total_paid | currency  }}</th>
-							<th>{{  TotalOrderList.total_iva_exc | currency  }}</th>
-							<th>{{  TotalOrderList.total_discount | currency  }}</th>
+							<th>{{ TotalOrderList.total_paid }}</th>
+							<th>{{ TotalOrderList.total_iva_exc }}</th>
+							<th>{{ TotalOrderList.total_discount }}</th>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
-			<pagination :align="'center'" :data="OrderList" :limit="8" @pagination-change-page="getOrders">
-				<span slot="prev-nav"><i class="bi bi-chevron-double-left"></i></span>
-				<span slot="next-nav"><i class="bi bi-chevron-double-right"></i></span>
-			</pagination>
+			<TailwindPagination :align="'center'" :data="OrderList" :limit="8" @pagination-change-page="getOrders">
+				<slot name="prev-nav"><i class="bi bi-chevron-double-left"></i></slot>
+				<slot name="next-nav"><i class="bi bi-chevron-double-right"></i></slot>
+			</TailwindPagination>
 		</section>
 		<div class="footer"></div>
 	</div>
@@ -168,7 +176,7 @@ export default {
 		};
 	},
 	created() {
-		this.$root.validateToken();
+		// this.$root.validateToken();
 		this.listUsers();
 		this.getOrders(1);
 		this.moment = moment
