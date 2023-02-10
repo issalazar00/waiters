@@ -36,9 +36,9 @@ export default {
   watch: {
     loading() {
       if (this.loading) {
-        $("#modalLoadPdf").modal("show");
+        // $("#modalLoadPdf").modal("show");
       } else {
-        $("#modalLoadPdf").modal("hide");
+        // $("#modalLoadPdf").modal("hide");
       }
     },
   },

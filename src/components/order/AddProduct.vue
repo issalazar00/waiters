@@ -6,7 +6,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-10" @close="open = false">
+    <Dialog as="div" class="relative z-10" @close="!open">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       </TransitionChild>
@@ -114,7 +114,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
                 </div>
               </div>
               <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6">
-                <button type="button" @click="open=false, $parent.openModalProduct=false">
+                <button type="button" @click="!open, $parent.openModalProduct=false">
                   Cerrar
                 </button>
               </div>
@@ -129,7 +129,16 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 <script>
 export default {
   name: "add-product",
-  props: { is_order: 0, open:false },
+  props: {
+    is_order: {
+      type: Number,
+      default: 0
+    },
+    open: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       // Filter modal

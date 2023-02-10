@@ -5,7 +5,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 <template>
   <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-10" @close="open = false">
+    <Dialog as="div" class="relative z-10" @close="!open">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       </TransitionChild>
@@ -72,7 +72,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
               </div>
               <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                
-                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false,  $parent.openModalClient=false" ref="cancelButtonRef">Cerrar</button>
+                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="!open,  $parent.openModalClient=false" ref="cancelButtonRef">Cerrar</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -85,7 +85,12 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 <script>
 export default {
   name: "add-client",
-  props: { open: false },
+  props: { 
+    open: { 
+      type: Boolean,
+      default: false 
+    } 
+  },
   data() {
     return {
       ClientList: {},

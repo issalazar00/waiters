@@ -2,15 +2,6 @@
 <template>
   <header>
     <MainMenu v-if="user && token"/>
-    <!-- <nav v-if="user && token">
-      <RouterLink :to="{name:'orders'}">Ordenes</RouterLink>
-      <RouterLink :to="{name:'create-edit-order', params:{order_id:0}}">Crear Orden</RouterLink>
-      <li class="nav-item">
-        <a class="nav-link" href="#" @click="this.$root.logout">
-          <i class="bi bi-box-arrow-right"></i>
-          <span>Cerrar Sesión</span></a>
-      </li>
-    </nav> -->
   </header>
 
   <RouterView />
@@ -37,7 +28,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.assignDataRequired();
     },
     box() {
@@ -51,7 +42,6 @@ export default {
 
     }
   },
-  // router,
   created() {
     this.assignDataRequired();
     this.selectedBox();
@@ -81,10 +71,10 @@ export default {
     },
     validateToken() {
       this.axios.get('api/users/' + this.user.sub, this.config)
-        .then(response => {
+        .then(() => {
           return true;
         })
-        .catch(response => {
+        .catch(() => {
           this.logout();
         });
     },
@@ -94,7 +84,7 @@ export default {
         .then((response) => {
           this.listBoxes = response.data.boxes;
         })
-        .catch((response) => {
+        .catch(() => {
           this.listBoxes = [];
         });
     }

@@ -56,10 +56,9 @@
 
 <script>
 //Services
-import global from "./../_services/global.js";
 
 export default {
-  name: "Login",
+  name: "app-login",
   data() {
     return {
       data: "Login",

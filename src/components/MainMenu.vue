@@ -29,7 +29,7 @@
   </template>
   
   <script setup>
-  import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-  import { Bars3Icon, ArrowRightOnRectangleIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+  import { Disclosure } from '@headlessui/vue'
+  import {  ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
 
   </script>

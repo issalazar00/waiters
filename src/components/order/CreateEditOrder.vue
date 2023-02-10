@@ -410,8 +410,8 @@ export default {
           console.log("roder", this.order);
           this.axios
             .put(`api/orders/${this.order_id}`, this.order, this.$root.config)
-            .then((response) =>
-              Swal.fire({
+            .then(() =>
+              this.$swal.fire({
                 icon: "success",
                 title: "Excelente",
                 text: "Los datos se han guardado correctamente",
@@ -421,7 +421,7 @@ export default {
               // handle error
               console.log("error", error);
               if (error) {
-                Swal.fire({
+                this.$swal.fire({
                   icon: "error",
                   title: "Oops...",
                   text: "Hubo un error al guardar los datos",
@@ -437,8 +437,8 @@ export default {
           if (this.order.box_id > 0) {
             this.axios
               .post(`api/orders`, this.order, this.$root.config)
-              .then((response) => {
-                Swal.fire({
+              .then(() => {
+                this.$swal.fire({
                   icon: "success",
                   title: "Excelente",
                   text: "Los datos se han guardado correctamente",
@@ -447,7 +447,7 @@ export default {
               .catch(function (error) {
                 // handle error
                 if (error) {
-                  Swal.fire({
+                  this.$swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Hubo un error al guardar los datos",
@@ -465,7 +465,7 @@ export default {
         }
       } else {
         this.disabled = false;
-        Swal.fire({
+        this.$swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Debes añadir productos al carrito",
@@ -479,28 +479,13 @@ export default {
         this.$root.config
       );
     },
-    commands() {
-      let me = this;
-
-      shortcut.add("F1", function () {
-        me.createOrUpdateOrder(2);
-      });
-
-      shortcut.add("F2", function () {
-        me.createOrUpdateOrder(4);
-      });
-
-      shortcut.add("F10", function () {
-        $("#addProductModal").modal("show");
-      });
-    },
+   
   },
   mounted() {
     if (this.order_id != null || this.order_id != 0) {
       this.listItemsOrder();
     }
     this.listTables()
-    // this.commands();
     // this.$refs.ModalBox.selectedBox();
   },
 };

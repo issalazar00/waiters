@@ -72,7 +72,7 @@
 					<tbody>
 						<tr v-for="o in OrderList.data" :key="o.id">
 							<th scope="row">{{ o.id }} - {{ o.bill_number }}</th>
-							<td>{{ o.total_paid | currency }}</td>
+							<td>{{ o.total_paid  }}</td>
 							<td>{{ o.client.name }}</td>
 							<td>
 								{{ statusOrders[o.state]["status"] }}
@@ -103,12 +103,12 @@
 							<td>
 								<span>
 									<b>Creación:</b>
-									{{ o.created_at | moment("DD-MM-YYYY h:mm:ss a") }}
+									{{ o.created_at }}
 								</span>
 								<br />
 								<span v-if="o.payment_date">
 									<b>Facturación:</b>
-									{{ o.payment_date | moment("DD-MM-YYYY h:mm:ss a") }}
+									{{ o.payment_date }}
 								</span>
 							</td>
 							<td v-if="$root.validatePermission('order.update')">
@@ -149,6 +149,7 @@ import LoadPdf from "./LoadPdf.vue";
 import moment from 'moment'
 
 export default {
+	name:'app-orders',
 	components: { LoadPdf },
 	data() {
 		return {
@@ -207,7 +208,7 @@ export default {
 				.delete(`api/orders/${order_id}`, this.$root.config)
 				.then(() => {
 					this.getOrders(1);
-					Swal.fire({
+					this.$swal.fire({
 						icon: "success",
 						title: "Excelente",
 						text: "Los datos se han eliminado correctamente",
@@ -216,7 +217,7 @@ export default {
 				.catch(function (error) {
 					// handle error
 					if (error) {
-						Swal.fire({
+						this.$swal.fire({
 							icon: "error",
 							title: "Oops...",
 							text: "Hubo un error al eliminar la orden",
