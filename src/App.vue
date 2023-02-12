@@ -4,7 +4,7 @@
     <MainMenu v-if="user && token"/>
   </header>
 
-  <RouterView />
+  <RouterView class="container mx-auto" />
 </template>
 <script>
 import global from './_services/global.js'

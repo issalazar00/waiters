@@ -1,7 +1,7 @@
 <template>
   <div class="row px-2" id="create-edit-order">
     <div class="col-12 justify-content-center p-2">
-      <div class="sticky-top mb-2 text-uppercase w-md-50 w-100" style="z-index: 1022; left: 100%">
+      <div class="sticky-top mb-2 text-uppercase w-md-50 w-100">
         <table class="table table-borderless">
           <tr class="h1 text-white bg-success">
             <td class="text-right">Total</td>
@@ -9,120 +9,117 @@
           </tr>
         </table>
       </div>
-      <div class="row position-sticky sticky-top mb-2 bg-light p-1" style="top: 0.5rem">
-        <div class="input-group col-12 col-md-6">
-          <input type="text" class="form-control" placeholder="Código de barras" aria-label=" with two button addons"
-            aria-describedby="button-add-product" v-model="filters.product" autofocus
-            @keypress.enter="searchProduct()" />
-          <div class="input-group-append" id="button-add-product">
-            <button class="btn btn-outline-secondary" type="button" @click="searchProduct()">
-              <b>F10</b>
-              Añadir Producto
-            </button>
-            <button class="btn btn-outline-secondary" type="button" @click="openModalProduct = true">
-              <i class="bi bi-card-checklist"></i>
-              Abrir Modal de productos
-            </button>
-          </div>
-        </div>
-        <div class="input-group col-12 col-md-6">
-          <v-select :options="tableList" placeholder="Seleccionar mesa" class="w-100" label="table"
+      <div class="grid grid-cols-1 mb-2 ">
+        <div class="input-group inline-flex ">
+          <v-select :options="tableList" placeholder="Seleccionar mesa" class="w-full form-input p-0 " label="table"
             :reduce="(table) => table.id" v-model="order.table_id" />
         </div>
-        <div class="input-group col-12 col-md-6 offset-md-6">
-          <input type="text" class="form-control" :placeholder="order.client" aria-label=" with two button addons"
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+        <div class="input-group inline-flex ">
+          <input type="text" class="form-control w-4/6 " placeholder="Código de barras"
+            aria-label=" with two button addons" aria-describedby="button-add-product" v-model="filters.product"
+            autofocus @keypress.enter="searchProduct()" />
+          <button class="btn btn-outline-success w-2/6" type="button" @click="openModalProduct = true">
+            <i class="bi bi-card-checklist"></i>
+            Agregar productos
+          </button>
+        </div>
+
+        <div class="input-group inline-flex  offset-md-6">
+          <input type="text" class="form-control w-4/6" :placeholder="order.client" aria-label=" with two button addons"
             aria-describedby="button-addon4" v-model="filters.client" @keypress.enter="searchClient()" />
-          <div class="input-group-append" id="button-addon4">
-            <button class="btn btn-outline-secondary" type="button" @click="searchClient()">
-              Añadir Cliente
-            </button>
-            <button class="btn btn-outline-secondary" type="button" @click="openModalClient = true">
-              Abrir Modal de clientes {{ openModalClient }}
-              <i class="bi bi-person-lines-fill"></i>
-            </button>
-          </div>
+          <button class="btn btn-outline-success w-2/6" type="button" @click="openModalClient = true">
+            Agregar cliente
+            <i class="bi bi-person-lines-fill"></i>
+          </button>
         </div>
 
       </div>
 
-      <section>
-        <div>
-          <table class="
+      <section class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="
               table table-auto table-sm table-responsive-sm table-bordered table-hover
             ">
-            <thead class="bg-secondary text-white" style="top: 4rem">
-              <tr>
-                <th></th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody v-if="productsOrderList.length > 0">
-              <tr v-for="(p, index) in productsOrderList" :key="p.id">
-                <td>
-                  <button class="btn text-danger" @click="removeProduct(index, p.id)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
-
-                <td>{{ p.product }}</td>
-                <td>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-danger d-none d-xs-none d-sm-none d-md-block" type="button"
-                        id="button-addon1" @click="p.quantity -= 1" :disabled="p.quantity <= 1">
-                        -
+                <thead class="bg-secondary text-white">
+                  <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody v-if="productsOrderList.length > 0">
+                  <tr v-for="(p, index) in productsOrderList" :key="p.id">
+                    <td class="text-center">
+                      <button class="btn text-danger-700 rounded-full p-1 text-2xl" @click="removeProduct(index, p.id)">
+                        <i class="bi bi-trash"></i>
                       </button>
-                    </div>
+                    </td>
 
-                    <input type="number" name="quantity" id="quantity" step="any" placeholder="Cantidad"
-                      class="form-control " v-model="p.quantity" size="6" pattern="[0-9]+" style="min-width: 60px" />
-                    <div class="input-group-prepend w-sm-50">
-                      <button class="btn btn-danger d-sm-block d-md-none d-lg-none" type="button" id="button-addon1"
-                        @click="p.quantity -= 1" :disabled="p.quantity <= 1">
-                        -
-                      </button>
-                    </div>
-                    <div class="input-group-prepend w-sm-50">
-                      <button class="btn btn-success hidden-sm" type="button" id="button-addon1"
-                        @click="p.quantity += 1">
-                        +
-                      </button>
-                    </div>
-                  </div>
+                    <td>{{ p.product }}</td>
+                    <td>
+                      <div class="grid grid-cols-2 md:grid-cols-4">
+                        <div class="input-group-prepend hidden md:block">
+                          <button class="btn w-full h-full btn-danger " type="button" id="button-addon1"
+                            @click="p.quantity -= 1" :disabled="p.quantity <= 1">
+                            -
+                          </button>
+                        </div>
 
-                  <span class="hidden d-none">
-                    {{
-                    (p.cost_price_tax_inc_total =
+                        <input type="number" name="quantity" id="quantity" step="any" placeholder="Cantidad"
+                          class="form-control col-span-2 md:col-span-2 " v-model="p.quantity" size="6"
+                          pattern="[0-9]+" />
+                        <div class="input-group-prepend col-span-1 md:col-span-1 sm:block md:hidden lg:hidden">
+                          <button class="btn w-full h-full btn-danger" type="button" id="button-addon1"
+                            @click="p.quantity -= 1" :disabled="p.quantity <= 1">
+                            -
+                          </button>
+                        </div>
+                        <div class="input-group-prepend col-span-1 md:col-span-1 hidden-sm">
+                          <button class="btn w-full h-full btn-success " type="button" id="button-addon1"
+                            @click="p.quantity += 1">
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <span class="hidden d-none">
+                        {{
+                        (p.cost_price_tax_inc_total =
   p.cost_price_tax_inc * p.quantity)
-                    }}
-                  </span>
-                </td>
-                <td>
-                  <input type="number" name="price" id="price" step="any" disabled placeholder="Cantidad"
-                    v-model="p.price_tax_inc" class="form-control" style="max-width: 100px" />
-                </td>
+                        }}
+                      </span>
+                    </td>
+                    <td>
+                      <input type="number" name="price" id="price" step="any" disabled placeholder="Cantidad"
+                        v-model="p.price_tax_inc" class="form-control" style="max-width: 100px" />
+                    </td>
 
-                <td>
-                  $
-                  {{
-                  (p.price_tax_inc_total =
+                    <td>
+                      $
+                      {{
+                      (p.price_tax_inc_total =
   p.quantity * p.price_tax_inc -
   p.quantity *
   p.price_tax_inc *
   (p.discount_percentage / 100))
-                  }}
-                </td>
-              </tr>
-            </tbody>
-            <tbody v-else>
-              <tr>
-                <td colspan="8">No se han añadido productos</td>
-              </tr>
-            </tbody>
-          </table>
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="8">No se han añadido productos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -132,20 +129,20 @@
           <div>
             <table class="table table-sm table-primary table-auto text-right">
               <tr class="bg-success h5 text-white">
-                <th colspan="7">Total:</th>
+                <th>Total:</th>
                 <th>
                   $ {{ (order.total_tax_inc = total_tax_inc).toFixed(0) }}
                 </th>
               </tr>
 
               <tr class="">
-                <th colspan="7">Pagar:</th>
+                <th>Pagar:</th>
                 <th>
                   <input type="number" step="any" v-model="order.payment_methods.others" />
                 </th>
               </tr>
               <tr class="">
-                <th colspan="7">Cambio:</th>
+                <th>Cambio:</th>
                 <th>
                   <input type="text" :value="payment_return" readonly disabled />
                 </th>
@@ -154,8 +151,7 @@
           </div>
         </section>
         <div class="">
-          <button type="button" :disabled="disabled" class="btn btn-outline-primary btn-block"
-            @click="createOrUpdateOrder(1)">
+          <button type="button" :disabled="disabled" class="btn btn-primary btn-block" @click="createOrUpdateOrder(1)">
             <i class="bi bi-clock-fill"></i> Suspender
           </button>
           <router-link to="/orders" type="button" class="btn btn-outline-secondary btn-block" v-if="order_id != 0">
@@ -167,7 +163,7 @@
 
     <add-product :open="openModalProduct" @add-product="addProduct($event)" />
     <add-client :open="openModalClient" @add-client="addClient($event)" />
-    <modal-box :open="open" ref="ModalBox"></modal-box>
+    <modal-box  ref="ModalBox"></modal-box>
   </div>
 </template>
 
@@ -184,7 +180,7 @@ export default {
 
   data() {
     return {
-      open: ref(false),
+      openModalBox: ref(false),
       openModalProduct: ref(false),
       openModalClient: ref(false),
 
@@ -315,7 +311,7 @@ export default {
         .then(function (response) {
           var new_product = response.data.products;
           if (!new_product) {
-                  this.$swal('Hello Vue world!!!');
+            this.$swal('Hello Vue world!!!');
           } else {
             me.addProduct(new_product);
           }
@@ -479,7 +475,7 @@ export default {
         this.$root.config
       );
     },
-   
+
   },
   mounted() {
     if (this.order_id != null || this.order_id != 0) {

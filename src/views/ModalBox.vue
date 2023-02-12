@@ -34,7 +34,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 										<div class="mt-2">
 											<div class="form-row">
 												<div class="form-group col-md-6">
-													<select id="" class="form-control form-select" v-model="boxUser">
+													<select id="" class="form-select w-full" v-model="boxUser">
 														<option value="" disabled>Seleccione una caja</option>
 														<option v-for="item in $root.listBoxes" :value="item"
 															:key="item.id">
@@ -43,7 +43,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 													</select>
 												</div>
 												<div class="form-group col-md-6">
-													<input type="number" step="any" class="form-control"
+													<input type="number" step="any" class="form-control w-full"
 														v-model="boxUser.base" :disabled="boxUser.id ? false : true">
 												</div>
 											</div>
@@ -53,11 +53,11 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 							</div>
 							<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6">
 								<button type="button"
-									class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-									@click="!open">Cancelar</button>
+									class="btn btn-secondary btn-block"
+									@click="closeModal()">Cancelar</button>
 								<button type="button"
-									class="mt-3 btn-gray inline-flex w-full justify-center rounded-md border border-gray-300 bg-green-500 px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-									@click="!open, saveBox()" ref="cancelButtonRef">Aceptar</button>
+									class="btn btn-success btn-block"
+									@click="saveBox()" ref="cancelButtonRef">Aceptar</button>
 							</div>
 						</DialogPanel>
 					</TransitionChild>
@@ -71,20 +71,20 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 <script>
 
 export default {
-	props: {
-		open: {
-			type: Boolean,
-			default: false
-		}
-	},
+
 	name: "ModalBox",
 	data() {
 		return {
+			open: {
+				type: Boolean,
+				default: false
+			},
 			boxUser: {}
 		};
 	},
 	created() {
-		//this.$root.validateToken();
+		this.open = false;
+		this.selectedBox()
 	},
 	methods: {
 		selectedBox() {
@@ -102,12 +102,12 @@ export default {
 			if (box > 0) {
 				this.$root.box = box ?? this.boxUser.id;
 			} else {
-				// $("#staticBackdrop").modal("show");
+				this.open = true;
 			}
 		},
 		saveBox() {
 			localStorage.setItem("box_worker", this.boxUser.id);
-			// $("#staticBackdrop").modal("hide");
+			this.closeModal()
 
 			let data = {
 				'id': this.boxUser.id,
@@ -119,6 +119,9 @@ export default {
 		resetBox() {
 			this.$root.box = "";
 			localStorage.removeItem("box_worker");
+		},
+		closeModal(){
+			this.open=false
 		}
 	}
 };

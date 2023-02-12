@@ -1,27 +1,61 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
-    table {
-      @apply table-auto border-collapse border border-slate-500 border-spacing-2 gap-6;
-    }
-    thead {
-      @apply border-b;
-    }
-
-    th {
-      @apply text-sm font-medium text-gray-900 px-6 py-4 text-left;
-    }
-  
+  table {
+    @apply min-w-full border-collapse border border-slate-500 border-spacing-2;
   }
-
-
-@tailwind components;
+  thead {
+    @apply border-b;
+  }
+  tr {
+    @apply border-b;
+  }
+  th {
+    @apply text-sm font-bold text-gray-900 px-6 py-4 text-left border border-slate-300;
+  }
+  td {
+    @apply border border-slate-300;
+  }
+}
 
 @layer components {
-    button {
-      @apply p-2 border;
-    }
-  
+  .btn {
+    @apply inline-block px-6 py-2.5 font-bold text-xs leading-tight uppercase shadow-md focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out;
+  }
+}
+
+@layer utilities {
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 active:bg-primary-800  transition;
   }
 
-@tailwind utilities;
+  .btn-outline-primary {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-black hover:bg-opacity-5;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-600 text-white hover:bg-secondary-700 hover:shadow-lg focus:bg-secondary-700 active:bg-secondary-800  transition;
+  }
+
+  .btn-outline-secondary {
+    @apply border-2 border-secondary-600 text-secondary-600 hover:bg-black hover:bg-opacity-5;
+  }
+
+  .btn-danger {
+    @apply bg-danger-600 text-white hover:bg-danger-700 hover:shadow-lg focus:bg-danger-700 active:bg-danger-800;
+  }
+  .btn-outline-danger {
+    @apply border-2 border-danger-600 text-danger-600 hover:bg-black hover:bg-opacity-5;
+  }
+  .btn-success {
+    @apply bg-success-600 text-white hover:bg-success-700 hover:shadow-lg focus:bg-success-700 active:bg-success-800;
+  }
+  .btn-outline-success {
+    @apply border-2 border-success-600 text-success-600 hover:bg-black hover:bg-opacity-5;
+  }
+  .btn-block {
+    @apply w-full inline-block;
+  }
+}

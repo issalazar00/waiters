@@ -11,7 +11,7 @@
   <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
       <div>
-        <img class="w-12 mx-auto h-1zz2 w-auto" src="@/assets/logo.svg" alt="Your Company" />
+        <img class="w-12 mx-auto h-12 w-auto" src="@/assets/logo.svg" alt="Your Company" />
 
         <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Bienvenido</h2>
         <p class="mt-2 text-center text-sm text-gray-600">
@@ -43,7 +43,7 @@
 
         <div>
           <button type="submit"
-            class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            class="group relative flex w-full justify-center btn btn-indigo">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
             </span>
             Ingresar
