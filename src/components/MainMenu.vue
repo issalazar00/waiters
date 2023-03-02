@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button href="#" @click="this.$root.logout" type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <button href="#" @click="removeSession()" type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="sr-only">View notifications</span>
               <ArrowRightOnRectangleIcon class="h-6 w-6" aria-hidden="true" /> Salir
             </button>
@@ -31,5 +31,13 @@
   <script setup>
   import { Disclosure } from '@headlessui/vue'
   import {  ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
-
   </script>
+
+  <script>
+ export default {
+    methods: {
+      removeSession() {
+        this.$root.logout()
+      }
+    }
+  }</script>

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import global from './../_services/global.js';
 import HomeView from '../views/HomeView.vue'
@@ -9,7 +9,7 @@ const DetailsOrder = () => import ('./../components/order/DetailsOrder.vue')
 
 const router = createRouter({
   // history: createWebHistory(import.meta.env.BASE_URL),
-  history: createWebHistory(),
+  history: createWebHashHistory(),
 
   routes: [
     {
