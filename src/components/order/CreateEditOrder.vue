@@ -426,7 +426,14 @@ export default {
             })
             .finally(
               setTimeout(() => {
-                this.$router.go(0), (this.disabled = false)
+                this.$router.push({
+                  name:'create-edit-order',
+                  params:{
+                    order_id:0
+                  }
+                }),
+                this.$router.go(0), 
+                (this.disabled = false)
               }, 3000)
             );
         } else {
