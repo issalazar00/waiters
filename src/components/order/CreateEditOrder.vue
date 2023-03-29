@@ -147,6 +147,16 @@
                   <input type="text" :value="payment_return" readonly disabled />
                 </th>
               </tr>
+                <th for="observations">Observaciones</th>
+               <th>
+                <input
+                type="text"
+                id="observations"
+                placeholder="Observaciones"
+                v-model="order.observations"
+              />
+               </th>
+                
             </table>
           </div>
         </section>

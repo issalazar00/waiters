@@ -56,11 +56,8 @@
 											<th>Total</th>
 											<th>Cliente</th>
 											<th>Estado</th>
-											<!-- <th>Ver</th> -->
-											<!-- <th>Ticket</th> -->
-											<!-- <th>Imprimir</th> -->
+											<th>Mesa</th>
 											<th>Responsable</th>
-											<!-- <th>Fecha</th> -->
 											<th v-if="$root.validatePermission('order.update')">Editar</th>
 											<th v-if="$root.validatePermission('order.delete')">Eliminar</th>
 										</tr>
@@ -73,41 +70,17 @@
 											<td>
 												{{ statusOrders[o.state]["status"] }}
 											</td>
-											<!-- <td>
-												<router-link class="btn"
-													:to="{ name: 'details-order', params: { order_id: o.id } }">
-													<i class="bi bi-eye"></i>
-												</router-link>
-											</td>
-											<td>
-												<button class="btn" v-if="o.state == 5 || o.state == 2 || o.state == 3"
-													@click="printTicket(o.id)">
-													<i class="bi bi-receipt"></i>
-												</button>
-												<button class="btn" v-else disabled>
-													<i class="bi bi-receipt"></i>
-												</button>
-											</td> -->
-											<!-- <td>
-												<button class="btn text-danger" @click="generatePdf(o.id)">
-													<i class="bi bi-file-earmark-pdf-fill"></i>
-												</button>
-											</td> -->
 
 											<td>
 												{{ o.user.name }}
 											</td>
-											<!-- <td>
-												<span>
-													<b>Creación:</b>
-													{{ o.created_at }}
-												</span>
-												<br />
-												<span v-if="o.payment_date">
-													<b>Facturación:</b>
-													{{ o.payment_date }}
-												</span>
-											</td> -->
+
+											<td>
+												<template v-if="o.table">
+													{{ o.table.table }}
+												</template>
+											</td>
+
 											<td v-if="$root.validatePermission('order.update')">
 												<router-link class="btn" :to="{
 													name: 'create-edit-order',
@@ -122,7 +95,7 @@
 												</button>
 											</td>
 										</tr>
-									</tbody>									
+									</tbody>
 								</table>
 							</div>
 						</div>
