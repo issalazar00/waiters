@@ -297,6 +297,7 @@ export default {
       this.axios
         .get(`api/orders/${me.order_id}`, this.$root.config)
         .then(function (response) {
+          me.order = response.data.order_information;
           me.order.id_client = response.data.order_information.client_id;
           me.order.client = response.data.order_information.client.name;
           me.productsOrderList = response.data.order_details;
