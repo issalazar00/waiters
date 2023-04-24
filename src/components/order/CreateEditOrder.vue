@@ -405,7 +405,9 @@ export default {
       this.order.state = state_order;
       this.order.box_id = this.$root.box;
       this.order.total_cost_price_tax_inc = this.total_cost_price_tax_inc;
+      this.order.total_tax_exc = this.total_tax_exc
       this.order.payment_methods.change = this.payment_return;
+
 
       if (this.order.id_client == 1 && state_order == 5) {
         alert("Debe seleccionar un cliente válido");
