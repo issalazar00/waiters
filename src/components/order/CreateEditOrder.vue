@@ -15,7 +15,17 @@
             :reduce="(table) => table.id" v-model="order.table_id" />
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+        <!-- Agregar mesero -->
+        <div class="input-group inline-flex  offset-md-6">
+          <input type="text" class="form-control w-4/6" placeholder="Sin mesero" aria-label=" with two button addons"
+            aria-describedby="button-addon4" v-model="filters.waiter" />
+          <button class="btn btn-outline-success w-2/6" type="button" @click="openModalWaiter = true">
+            Agregar mesero
+            <i class="bi bi-person-lines-fill"></i>
+          </button>
+        </div>
+        
         <div class="input-group inline-flex ">
           <input type="text" class="form-control w-4/6 " placeholder="Código de barras"
             aria-label=" with two button addons" aria-describedby="button-add-product" v-model="filters.product"
@@ -173,6 +183,7 @@
 
     <add-product :open="openModalProduct" @add-product="addProduct($event)" />
     <add-client :open="openModalClient" @add-client="addClient($event)" />
+    <add-waiter :open="openModalWaiter" @add-waiter="addWaiter($event)" />
     <modal-box  ref="ModalBox"></modal-box>
   </div>
 </template>
@@ -180,11 +191,12 @@
 <script>
 import AddProduct from "./AddProduct.vue";
 import AddClient from "./AddClient.vue";
+import AddWaiter from "./AddWaiter.vue";
 import ModalBox from "./../../views/ModalBox.vue";
 import { ref } from 'vue'
 
 export default {
-  components: { AddProduct, AddClient, ModalBox },
+  components: { AddProduct, AddClient, AddWaiter, ModalBox },
   props: ["order_id"],
   name: "create-edit-order",
 
@@ -193,11 +205,13 @@ export default {
       openModalBox: ref(false),
       openModalProduct: ref(false),
       openModalClient: ref(false),
+      openModalWaiter: ref(false),
 
       // add product or client with keyup
       filters: {
         product: "",
         client: "",
+        waiter: "",
       },
       productsOrderList: [],
       tableList: [],
@@ -369,7 +383,7 @@ export default {
     },
     removeProduct(index, detail_id = null) {
       this.productsOrderList.splice(index, 1);
-      if (detail_id != null || detail_id != 0) {
+      if (detail_id != null && detail_id != 0) {
         this.axios.delete(`api/order-details/${detail_id}`, this.$root.config);
       }
     },
@@ -398,6 +412,12 @@ export default {
       me.order.id_client = client.id;
       me.order.client = client.name;
       me.filters.client = client.name;
+    },
+    addWaiter(waiter) {
+      let me = this;
+      me.order.id_client = waiter.id;
+      me.order.waiter = waiter.name;
+      me.filters.waiter = waiter.name;
     },
 
     createOrUpdateOrder(state_order) {
