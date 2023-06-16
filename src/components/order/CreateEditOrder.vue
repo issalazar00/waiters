@@ -18,7 +18,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
         <!-- Agregar mesero -->
         <div class="input-group inline-flex  offset-md-6">
-          <input type="text" class="form-control w-4/6" placeholder="Sin mesero" aria-label=" with two button addons"
+          <input type="text" class="form-control w-4/6" :placeholder="order.waiter" aria-label=" with two button addons"
             aria-describedby="button-addon4" v-model="filters.waiter" />
           <button class="btn btn-outline-success w-2/6" type="button" @click="openModalWaiter = true">
             Agregar mesero
@@ -211,7 +211,7 @@ export default {
       filters: {
         product: "",
         client: "",
-        waiter: "",
+        waiter: ""
       },
       productsOrderList: [],
       tableList: [],
@@ -219,6 +219,8 @@ export default {
       order: {
         id_client: 1,
         client: "Sin Cliente",
+        id_waiter: 0,
+        waiter: "Sin Mesero",
         state: 1,
         total_tax_inc: 0.0,
         total_tax_exc: 0.0,
@@ -415,7 +417,7 @@ export default {
     },
     addWaiter(waiter) {
       let me = this;
-      me.order.id_client = waiter.id;
+      me.order.id_waiter = waiter.id;
       me.order.waiter = waiter.name;
       me.filters.waiter = waiter.name;
     },
@@ -515,13 +517,26 @@ export default {
         this.$root.config
       );
     },
+    selfSelectWaiter()
+    {
+      let me = this;
+      let user = me.$root.user;
+      if(user)
+      {
+        me.order.id_waiter = user.sub;
+        me.order.waiter = user.name;
+        me.filters.waiter = user.name;
+      }
+      
+    }
 
   },
   mounted() {
     if (this.order_id != null || this.order_id != 0) {
       this.listItemsOrder();
     }
-    this.listTables()
+    this.listTables();
+    this.selfSelectWaiter();
     // this.$refs.ModalBox.selectedBox();
   },
 };

@@ -24,16 +24,6 @@ import { Dialog, DialogPanel, DialogTitle, DialogDescription, TransitionChild, T
                   <div class="mt-3 text-center sm:mt-0 sm:ml-0 sm:text-left w-full">
                     <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Mesero</DialogTitle>
                     <DialogDescription>
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Documento | Nombre de cliente"
-                          aria-label=" with two button addons" aria-describedby="button-addon4" v-model="filters.waiter"
-                          @keyup="searchClient()" />
-                        <div class="input-group-append" id="button-addon4">
-                          <button class="btn btn-outline-secondary" type="button" @click="searchClient()">
-                            Buscar Cliente
-                          </button>
-                        </div>
-                      </div>
 
                       <div class="flex flex-col">
                         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -95,10 +85,7 @@ export default {
   },
   data() {
     return {
-      waiterList: [],
-      filters: {
-        waiter: "",
-      },
+      waiterList: []
     };
   },
   created() {
@@ -112,23 +99,6 @@ export default {
         .then(function (response) {
           me.waiterList = response.data.data;
         });
-    },
-    searchClient() {
-      let me = this;
-      if (me.filters.waiter == "") {
-        return false;
-      }
-      var url = "api/user/wairte?search=" + me.filters.waiter;
-      if (me.filters.waiter.length >= 3) {
-        this.axios
-          .get(url, me.$root.config)
-          .then(function (response) {
-            me.waiterList = response.data.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
     },
     closeModal() {
       this.$parent.openModalWaiter = false

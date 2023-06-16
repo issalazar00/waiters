@@ -14,7 +14,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-axios.defaults.baseURL = 'http://restaurant-core.test/';
+axios.defaults.baseURL = 'http://restaurant-core.test';
 
 
 const app = createApp(App)
