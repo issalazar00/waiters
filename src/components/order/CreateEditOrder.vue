@@ -220,6 +220,7 @@ export default {
         id_client: 1,
         client: "Sin Cliente",
         id_waiter: 0,
+        box_id: 0,
         waiter: "Sin Mesero",
         state: 1,
         total_tax_inc: 0.0,
@@ -472,7 +473,7 @@ export default {
               }, 3000)
             );
         } else {
-          if (this.order.box_id > 0) {
+          if (this.order.box_id !== 0) {
             this.axios
               .post(`api/orders`, this.order, this.$root.config)
               .then(() => {
@@ -498,7 +499,11 @@ export default {
                 }, 3000)
               );
           } else {
-            alert("Selecciona una caja");
+            this.$swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Selecciona una caja",
+            });
           }
         }
       } else {
