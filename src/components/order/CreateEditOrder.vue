@@ -27,21 +27,9 @@
         </div>
         
         <div class="input-group inline-flex ">
-          <input type="text" class="form-control w-4/6 " placeholder="Código de barras"
-            aria-label=" with two button addons" aria-describedby="button-add-product" v-model="filters.product"
-            autofocus @keypress.enter="searchProduct()" />
-          <button class="btn btn-outline-success w-2/6" type="button" @click="openModalProduct = true">
+          <button class="btn btn-outline-success w-full" type="button" @click="openModalProduct = true">
             <i class="bi bi-card-checklist"></i>
             Agregar productos
-          </button>
-        </div>
-
-        <div class="input-group inline-flex  offset-md-6">
-          <input type="text" class="form-control w-4/6" :placeholder="order.client" aria-label=" with two button addons"
-            aria-describedby="button-addon4" v-model="filters.client" @keypress.enter="searchClient()" />
-          <button class="btn btn-outline-success w-2/6" type="button" @click="openModalClient = true">
-            Agregar cliente
-            <i class="bi bi-person-lines-fill"></i>
           </button>
         </div>
 
@@ -138,33 +126,10 @@
         <section class="card">
           <div>
             <table class="table table-sm table-primary table-auto text-right">
-              <tr class="bg-success h5 text-white">
-                <th>Total:</th>
-                <th>
-                  $ {{ (order.total_tax_inc = total_tax_inc).toFixed(0) }}
-                </th>
-              </tr>
 
-              <tr class="">
-                <th>Pagar:</th>
-                <th>
-                  <input type="number" step="any" v-model="order.payment_methods.others" />
-                </th>
-              </tr>
-              <tr class="">
-                <th>Cambio:</th>
-                <th>
-                  <input type="text" :value="payment_return" readonly disabled />
-                </th>
-              </tr>
                 <th for="observations">Observaciones</th>
                <th>
-                <input
-                type="text"
-                id="observations"
-                placeholder="Observaciones"
-                v-model="order.observations"
-              />
+                <input type="text" id="observations" placeholder="Observaciones" v-model="order.observations" />
                </th>
                 
             </table>
@@ -172,7 +137,7 @@
         </section>
         <div class="">
           <button type="button" :disabled="disabled" class="btn btn-primary btn-block" @click="createOrUpdateOrder(1)">
-            <i class="bi bi-clock-fill"></i> Suspender
+            <i class="bi bi-clock-fill"></i> Pedido
           </button>
           <router-link to="/orders" type="button" class="btn btn-outline-secondary btn-block" v-if="order_id != 0">
             <i class="bi bi-cart-x"></i> Cancelar

@@ -9,36 +9,11 @@
 			<!-- <load-pdf :loading="load_pdf" /> -->
 			<div class="card-body overflow-hidden shadow sm:rounded-md">
 				<div class="form-row grid grid-cols-12 gap-6 justify-end">
-
 					<div class="form-group col-3 col-span-6 sm:col-span-4">
-						<label class="block text-xs font-medium text-gray-700" for="category">Estado</label>
-						<v-select :options="statusOrders" label="status" :reduce="(status) => status.id"
-							v-model="filter.status" />
+						<v-select :options="tableList" placeholder="Seleccionar mesa" class="w-100" label="table"  @search="onSearchTable"
+							:reduce="(table) => table.id" v-model="filter.table_id" />
 					</div>
-					<div class="form-group col-3 col-span-6 sm:col-span-4">
-						<label class="block text-xs font-medium text-gray-700" for="nro_factura">Nro Factura</label>
-						<input type="text" name="nro_factura" id="nro_factura"
-							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-							placeholder="Nro Factura" v-model="filter.no_invoice" />
-					</div>
-					<div class="form-group col-3 col-span-6 sm:col-span-4">
-						<label class="block text-xs font-medium text-gray-700" for="name_client">Cliente</label>
-						<input type="text" name="name_client" id="name_client"
-							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-							placeholder="Cliente" v-model="filter.client" />
-					</div>
-					<div class="form-group col-md-3 col-span-6 sm:col-span-4">
-						<label class="block text-xs font-medium text-gray-700" for="from_date">Desde</label>
-						<input type="date"
-							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-							id="from_date" v-model="filter.from" />
-					</div>
-					<div class="form-group col-md-3 col-span-6 sm:col-span-4">
-						<label class="block text-xs font-medium text-gray-700" for="to_date">Hasta</label>
-						<input type="date"
-							class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-							id="to_date" v-model="filter.to" />
-					</div>
+					
 					<div class="form-group offset-9 col-md-3 col-span-6 sm:col-span-4">
 						<button class="btn btn-primary btn-block" @click="getOrders(1)">
 							Buscar
@@ -53,9 +28,7 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Total</th>
-											<th>Cliente</th>
-											<th>Estado</th>
+
 											<th>Mesa</th>
 											<th>Responsable</th>
 											<th v-if="$root.validatePermission('order.update')">Editar</th>
@@ -65,12 +38,6 @@
 									<tbody>
 										<tr v-for="o in OrderList.data" :key="o.id">
 											<th scope="row">{{ o.id }} - {{ o.bill_number }}</th>
-											<td>{{ o.total_paid }}</td>
-											<td>{{ o.client.name }}</td>
-											<td>
-												{{ statusOrders[o.state]["status"] }}
-											</td>
-
 											<td>
 												{{ o.user.name }}
 											</td>
@@ -120,6 +87,7 @@ export default {
 			load_pdf: false,
 			OrderList: {},
 			TotalOrderList: [],
+			tableList: [],
 			userList: [],
 			filter: {
 				client: "",
@@ -127,11 +95,12 @@ export default {
 				from: "",
 				to: "",
 				user_id: "",
+				table_id: "",
 				status: `1,2`,
 			},
 			statusOrders: [
 				{ id: 0, status: "Desechada" },
-				{ id: 1, status: "Suspender" },
+				{ id: 1, status: "Pedido" },
 				{ id: 2, status: "Facturado" },
 				{ id: 3, status: "Cotizado" },
 				{ id: 4, status: "Facturar e imprimir" },
@@ -158,6 +127,7 @@ export default {
 				to: me.filter.to,
 				user_id: me.filter.user_id,
 				status: me.filter.status,
+				table_id: me.filter.table_id
 			};
 
 			this.axios
@@ -216,6 +186,24 @@ export default {
 				.then(function (response) {
 					me.userList = response.data.users;
 				});
+		},
+		onSearchTable(search, loading) {
+			let params = {
+                table: search,
+                page: 1
+            }
+            if (search.length) {
+                loading(true);
+				this.axios
+				.get("api/tables", { params, headers: this.$root.config.headers })
+                    .then((response) => {
+                        this.tableList = (response.data.tables.data);
+						loading(false)
+                        console.log(response)
+                    })
+                    .catch(e => console.log(e))
+            }
+			
 		},
 	},
 };
